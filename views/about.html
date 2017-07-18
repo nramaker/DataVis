@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Example of Bootstrap 3 Pagination</title>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<style type="text/css">
+    .bs-example{
+      margin: 20px;
+    }
+</style>
+</head>
+<body>
+    
+<div>
+<nav class="navbar navbar-inverse" role="navigation" style="padding-left:130px;">
+       <ul class="nav navbar-nav">
+      <li class="active"><a href="/">Home<span class="sr-only">(current)</span></a></li>
+      <li><a href="/about">About the Visualization</a></li>
+    </ul>
+</nav>
+</div>
+
+<div class="bs-example">
+    <ul class="pagination pagination-large">
+        <li class="disabled"><a href="#">&nbsp;</a></li>
+        <li><a href="/">1</a></li>
+        <li><a href="page2">2</a></li>
+        <li><a href="page3">3</a></li>
+        <li><a href="page4">4</a></li>
+        <li><a href="page5">5</a></li>
+        <li class="disabled"><a href="#">&nbsp;</a></li>
+    </ul>
+</div>
+
+<div class="jumbotron"> <p>
+<h2>Question: Can we identify employees likely to leave a company based on historical HR data?</h2>
+
+</p></div>
+<div>
+<p>Employee retention is a focal issue for many large companies, especially those in the technical industry where employees have many opportunities available to them.  Hiring a new employee is a long and expensive process, and once hired a company must invest several weeks or months of training into the employee before he or she will become a productive contributor. This cost and loss of productivity is compounded when the new employee is intended to replace a highly productive employee who has decided to leave the company due to low job satisfaction or to pursue a higher salary. 
+</p><p>
+To minimize the impact from employee turnover, many Human Resource departments are examining their employee data to find patterns in employee departures.  One such dataset was publicly released as part of a Kaggle competition to predict employee departures using machine learning, and can be downloaded from the following link: https://www.kaggle.com/ludobenistant/hr-analytics 
+</p><p>
+The data itself is a simulated set of employee records, with each record containing fields defined for their department, a categorical salary groups, a satisfaction rating, their last evaluation, and several others.  Each employee record also labeled with a field signifying whether they’ve left the company or stayed.  By visualizing attributes common amongst departed employees, I this dashboard intends to give the viewer insights into the characteristics of those employees and predict the departures of additional employees in the future. 
+</p><p>
+It was not necessary to modify this dataset outside of Tableau, though some column descriptions were renamed to be more descriptive. 
+</p><p>
+A natural first approach is to try to determine if certain departments have more departures than others, and it is similarly natural to suspect that most people who left did so because they wanted more money.  The grid table in the upper left corner of the dashboard provides quantitative counts of departures by department, further divided they person’s salary with either a High, Medium, or Low designation.  Because this is quantitative data, cells that contain larger counts are given higher color saturation than those will smaller count, with the largest overall counts also changing their hue. This approach agrees with the philosophy of using highly saturated strokes, but lightly saturated area fills. 
+</p><p>
+This table allows the viewer to quickly identify that our highest number of departures are from lowly paid employees from the Support, Technical, and especially Sales departments.  It comes as no surprise that highly paid employees are less likely to leave, as the table clearly denotes, but this table is somewhat misleading because it suggests to the viewer that a few departments are particularly prone to high employee turnover. 
+</p><p>
+To determine if this suggestion is true or false, we must examine the overall rate of departures varies significantly between departments.  By plotting the Departure Count against the overall Department Population and calculating a trendline we can clearly see that all departments in the dataset have a similar attrition rate of around 25%. This fact is clearly visible in the Scatter Plot graph in the lower left of the Dashboard, and is further supported by the accompanying Packet Bubbles chart that shows that the departments with the highest departure count also have a significantly higher population overall.  With these two visualizations, the viewer can clearly conclude that the employee’s department is not a significant factor in departure rates.  The color pallet for the Scatter Plot separates the categorical departments by hue because the data is nominal. 
+</p><p>
+Since we have determined that department is not a factor in turnover rates, the viewer can turn their focus to the satisfaction level of departed employees and their last evaluation ratings, each measure subdivided by their salaries. The remaining two charts on the Dashboard help the user visualize this quantitative data as Stacked Bar charts, using position to as a mechanism to clearly communicate the group size to the user for each dimension.   Categories are differentiated by hue because the salary data is categorical. 
+</p><p>
+From these two charts, very interesting patterns start to emerge.  Specifically, very interesting conclusions can be made from the distribution of departures according to the Last Evaluation Rating.  Unsurprisingly, employees are very likely to leave when they were reviewed poorly.  These employees most likely fear that they may not have a future with the company, and have left due to fear for their job.  Less expected was the high number of departures from highly rated employees, though this high attrition rate is understandable.  These employees may feel confident enough in their abilities to confidently explore other opportunities, or they may feel underappreciated in their current role. 
+</p><p>
+Most surprising was the revelation that almost no employees who received mediocre ratings left the company compared to their peers who were rated either higher or lower. These results are mirrored closely in the chart that displays employee satisfaction; high employee turnover occurred either when an employee is either very unsatisfied or when the employee has a higher than average level of satisfaction.  Almost no employees with a middling satisfaction level left compared to their peers. 
+</p><p>
+From this visualization, an HR employee might conclude that retention is highest when employees are neither treated so poorly that they are negatively motivated to find new work, nor praised so heavily that they feel entitled to more compensation than the company is willing to grant them. 
+</p>
+</div>
+    
+</body>
+</html>   
