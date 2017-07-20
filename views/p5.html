@@ -4,10 +4,11 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Example of Bootstrap 3 Pagination</title>
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<title>CS498 Data Visualization - Final Project</title>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<!--<script src="assets/js/d3.min.js"></script>-->
 <style type="text/css">
     .bs-example{
       margin: 20px;
@@ -26,22 +27,120 @@
 </div>
 
 <div class="bs-example">
-    <ul class="pagination">
+    <ul class="pagination pagination-lg">
         <li><a href="page4">&laquo;</a></li>
         <li><a href="/">1</a></li>
         <li><a href="page2">2</a></li>
         <li><a href="page3">3</a></li>
         <li><a href="page4">4</a></li>
         <li class="disabled"><a href="#">5</a></li>
-        <li class="disabled"><a href="#">&raquo;</a></li>
+        <li class="disabled"><a href="#">&nbsp;</a></li>
     </ul>
 </div>
 <div class="jumbotron"> <p>
-<h1>This is page 5.</h1>
+<h2>Last Evaluation of Departed Employees</h2>
 
 
 This is place to put content. You can put slider, short description about your website and place some links for navigation.
 </p></div>
+
+<div id="stackedbars">
+  <h3>Rating on Last Evaluation</h3>
+  <svg id="chart" width="800" height="500"></svg></div>
+</body>
+<script src="https://d3js.org/d3.v4.min.js"></script>
+<script>
+
+var svg = d3.select("#chart"),
+    margin = {top: 20, right: 180, bottom: 30, left: 40},
+    width = +svg.attr("width") - margin.left - margin.right,
+    height = +svg.attr("height") - margin.top - margin.bottom,
+    g = svg.append("g").attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+var x = d3.scaleBand()
+    .rangeRound([0, width])
+    .padding(0.3)
+    .align(0.3);
+
+var y = d3.scaleLinear()
+    .rangeRound([height, 0]);
+
+var z = d3.scaleOrdinal(d3.schemeCategory20);
+    // .range(["#98abc5", "#8a89a6", "#7b6888", "#6b486b", "#a05d56", "#d0743c", "#ff8c00"]);
+
+var stack = d3.stack();
+
+d3.csv("../data/last_eval_rating.csv", type, function(error, data) {
+  if (error){
+    console.log("couldn't find csv");
+    throw error;  
+  } 
+
+  data.sort(function(a, b) {
+    console.log(a);
+    return a.rating - b.rating; })
+  ;
+
+  x.domain(data.map(function(d) { return d.rating; }));
+  y.domain([0, d3.max(data, function(d) { return d.total; })]).nice();
+  z.domain(data.columns.slice(1));
+
+  g.selectAll(".serie")
+    .data(stack.keys(data.columns.slice(1))(data))
+    .enter().append("g")
+      .attr("class", "serie")
+      .attr("fill", function(d) { return z(d.key); })
+    .selectAll("rect")
+    .data(function(d) { return d; })
+    .enter().append("rect")
+      .attr("x", function(d) { return x(d.data.rating); })
+      .attr("y", function(d) { return y(d[1]); })
+      .attr("height", function(d) { return y(d[0]) - y(d[1]); })
+      .attr("width", x.bandwidth());
+
+  g.append("g")
+      .attr("class", "axis axis--x")
+      .attr("transform", "translate(0," + height + ")")
+      .call(d3.axisBottom(x).tickValues(x.domain().filter(function(d, i){return ((d*10)%1==0)})));
+
+  g.append("g")
+      .attr("class", "axis axis--y")
+      .call(d3.axisLeft(y).ticks(10, "s"))
+    .append("text")
+      .attr("x", 2)
+      .attr("y", y(y.ticks(10).pop()))
+      .attr("dy", "0.35em")
+      .attr("text-anchor", "start")
+      .attr("fill", "#000")
+      .text("Number of Departures");
+
+  var legend = g.selectAll(".legend")
+    .data(data.columns.slice(1).reverse())
+    .enter().append("g")
+      .attr("class", "legend")
+      .attr("transform", function(d, i) { return "translate(0," + i * 20 + ")"; })
+      .style("font", "10px sans-serif");
+
+  legend.append("rect")
+      .attr("x", width + 18)
+      .attr("width", 18)
+      .attr("height", 18)
+      .attr("fill", z);
+
+  legend.append("text")
+      .attr("x", width + 44)
+      .attr("y", 9)
+      .attr("dy", ".35em")
+      .attr("text-anchor", "start")
+      .text(function(d) { return d; });
+});
+
+function type(d, i, columns) {
+  for (i = 1, t = 0; i < columns.length; ++i) t += d[columns[i]] = +d[columns[i]];
+  d.total = t;
+  return d;
+}
+</script>
     
 
 </body>

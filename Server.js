@@ -2,9 +2,12 @@ var express = require("express");
 var app = express();
 var router = express.Router();
 var path = __dirname + '/views/';
+var dataPath = __dirname + "/data/";
+var assetPath = __dirname + "/assets/";
 
 router.use(function (req,res,next) {
   console.log("/" + req.method);
+  console.log(req.url);
   next();
 });
 
@@ -35,7 +38,21 @@ router.get("/contact",function(req,res){
 
 app.use("/",router);
 
+app.use("/data/segments_table2.csv",function(req,res){
+  console.log("Loading CSV file.");
+  res.sendFile(dataPath + "segments_table2.csv");
+});
+
+app.use("/data/last_eval_rating.csv",function(req,res){
+  console.log("Loading CSV file.");
+  res.sendFile(dataPath + "last_eval_rating.csv");
+});
+
+app.use("/favicon.ico", function(req, res){
+	res.sendFile(assetPath+"img/favicon.ico");
+});
 app.use("*",function(req,res){
+  console.log("Didn't find file.");
   res.sendFile(path + "404.html");
 });
 
