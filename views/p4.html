@@ -103,7 +103,7 @@ This is place to put content. You can put slider, short description about your w
   };
 
   //color scheme
-  var color = d3.scale.category10();
+  var color = d3.scale.category20();
 
   //tooltips
   var tooltip = d3.select("body").append("div")
@@ -210,7 +210,7 @@ This is place to put content. You can put slider, short description about your w
                     .duration(200)
                     .style("opacity",.9);
                 tooltip.html("trendline: " + leastSquaresCoeff[0].toFixed(2) + "x + " + 
-                    leastSquaresCoeff[1].toFixed(2)+"<br/> r-sq: " + leastSquaresCoeff[2].toFixed(3)+")")
+                    leastSquaresCoeff[1].toFixed(2)+"<br/> r-sq: " + leastSquaresCoeff[2].toFixed(3))
                     .style("left", (d3.event.pageX + 15) + "px")
                     .style("top", (d3.event.pageY + 10) + "px");
              })
@@ -219,20 +219,7 @@ This is place to put content. You can put slider, short description about your w
                     .duration(500)
                     .style("opacity",0);
        });
-    //   // display equation on the chart
-    // svg.append("text")
-    //   .text("trendline: " + leastSquaresCoeff[0].toFixed(2) + "x + " + 
-    //     leastSquaresCoeff[1].toFixed(2))
-    //   .attr("class", "text-label")
-    //   .attr("x", function(d) {return xMin ;})
-    //   .attr("y", function(d) {return yMin + 10;});
-    
-    // // display r-square on the chart
-    // svg.append("text")
-    //   .text("r-sq: " + leastSquaresCoeff[2].toFixed(3))
-    //   .attr("class", "text-label")
-    //   .attr("x", function(d) {return xMin ;})
-    //   .attr("y", function(d) {return yMin +30;});
+
 
     //draw the legend
     var legend = svg.selectAll(".legend")

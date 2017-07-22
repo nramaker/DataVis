@@ -50,6 +50,11 @@ app.use("/data/dept_rate_size.csv",function(req,res){
   res.sendFile(dataPath + "dept_rate_size.csv");
 });
 
+app.use("/data/dept_size.csv",function(req,res){
+  console.log("Loading CSV file.");
+  res.sendFile(dataPath + "dept_size.csv");
+});
+
 app.use("/favicon.ico", function(req, res){
 	res.sendFile(assetPath+"img/favicon.ico");
 });
@@ -64,6 +69,12 @@ app.use("/data/cereal.csv",function(req,res){
   console.log("Loading CSV file.");
   res.sendFile(dataPath + "cereal.csv");
 });
+
+app.use("/data/flare.csv",function(req,res){
+  console.log("Loading CSV file.");
+  res.sendFile(dataPath + "flare.csv");
+});
+
 
 
 app.use("*",function(req,res){
