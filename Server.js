@@ -6,11 +6,12 @@ var dataPath = __dirname + "/data/";
 var assetPath = __dirname + "/assets/";
 
 router.use(function (req,res,next) {
-  console.log("/" + req.method);
-  console.log(req.url);
+  // console.log("/" + req.method);
+  // console.log(req.url);
   next();
 });
 
+//PAGE ROUTES
 router.get("/",function(req,res){
   res.sendFile(path + "index.html");
 });
@@ -38,11 +39,7 @@ router.get("/contact",function(req,res){
 
 app.use("/",router);
 
-app.use("/data/segments_table2.csv",function(req,res){
-  console.log("Loading CSV file.");
-  res.sendFile(dataPath + "segments_table2.csv");
-});
-
+//DATA ROUTES
 app.use("/data/last_eval_rating.csv",function(req,res){
   console.log("Loading CSV file.");
   res.sendFile(dataPath + "last_eval_rating.csv");
@@ -51,6 +48,19 @@ app.use("/data/last_eval_rating.csv",function(req,res){
 app.use("/favicon.ico", function(req, res){
 	res.sendFile(assetPath+"img/favicon.ico");
 });
+
+//REMOVE THESE ROUTES
+app.use("/data/segments_table2.csv",function(req,res){
+  console.log("Loading CSV file.");
+  res.sendFile(dataPath + "segments_table2.csv");
+});
+
+app.use("/data/cereal.csv",function(req,res){
+  console.log("Loading CSV file.");
+  res.sendFile(dataPath + "cereal.csv");
+});
+
+
 app.use("*",function(req,res){
   console.log("Didn't find file.");
   res.sendFile(path + "404.html");

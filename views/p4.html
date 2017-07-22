@@ -13,6 +13,23 @@
     .bs-example{
       margin: 20px;
     }
+
+    .dot{
+      stroke: #000;
+    }
+
+    .axis path, .axis line {
+      fill: none;
+      stroke: #000;
+      shape-rendering: crispEdges;
+    }
+
+    .tooltip {
+      position: absolute;
+      width: 200px;
+      height: 28px;
+      pointer-events: none;
+    }
 </style>
 </head>
 <body>
@@ -38,12 +55,107 @@
     </ul>
 </div>
 <div class="jumbotron"> <p>
-<h1>This is page 4.</h1>
+<h2>Departure Rate by Department</h2>
 
 
 This is place to put content. You can put slider, short description about your website and place some links for navigation.
 </p></div>
-    
+<div id="scatterPlot">
+  <h3>Departure Rate by Department</h3>
+  <svg id="chart" width="800" height="500"></svg></div>
+</body>
+<script>
+ 
+  //initialize global variables 
+  var svg = d3.select("#chart");
+
+  var margin = {top: 20, right: 180, bottom: 30, left: 40},
+    width = +svg.attr("width") - margin.left - margin.right,
+    height = +svg.attr("height") - margin.top - margin.bottom;
+
+  var g = svg.append("g").attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+  //initialize X variables
+  var xValue = function(d){
+      return d.Calories; //the column that we're plotting on the X plain
+      },
+      xScale = d3.scale.linear().range([0, width]),
+      xMap = function(d){
+          return xScale(xValue(d));
+      },
+      xAxis = d3.svg.axis().scale(xScale).orient("bottom").ticks(10);
+
+  //initialize Y variables
+  var yValue = function(d){
+        console.log(d["Protein (g)"]);
+        return d["Protein (g)"];  //the column that we're plotting on the Y plain
+      },
+      yScale = d3.scale.linear().range([height, 0]),
+      yMap = function(d){
+        console.log("mapping "+d);
+        return yScale(yValue(d));
+      },
+      yAxis = d3.svg.axis().scale(yScale).orient("left");
+
+  //chose how to color the values
+  var cValue = function(d){
+    return d.Manufacturer;
+  };
+
+  //color scheme
+  var color = d3.scale.category10();
+
+  //tooltips
+  var tooltip = d3.select("body").append("div")
+      .attr("class", "tooltip")
+      .style("opacity", 0);
+
+  //magically draw chart using D3
+  d3.csv("data/cereal.csv", function(error, data){
+    data.forEach(function(d){
+      d.Calories = +d.Calories;
+      d["Protein (g)"] = +d["Protein (g)"];
+    });
+
+    var xMin = d3.min(data, xValue)-1;
+    var xMax = d3.max(data, xValue)+1;
+    var yMin = d3.min(data, yValue)-1;
+    var yMax = d3.max(data, yValue)+1;
+
+    xScale.domain([xMin, xMax]);
+    yScale.domain([yMin, yMax]);
+
+    //draw the X Axis
+    g.append("g")
+          .attr("class", "x axis")
+          .attr("transform", "translate(0, "+height +")")
+          .call(xAxis)
+        .append("text")
+          .attr("class", "label")
+          .attr("x", width)
+          .attr("y", -6)
+          .style("text-anchor", "end")
+          .text("Calories");
+
+    //draw the Y Axis
+    g.append("g")
+          .attr("class", "y axis")
+          .call(yAxis)
+        .append("text")
+          .attr("class", "label")
+          .attr("transform", "rotate(-90)")
+          .attr("y", 6)
+          .attr("dy", ".8em")
+          .style("text-anchor", "end")
+          .text("Protein (g)");
+  });
+
+  //draw the points
+
+  //draw the trend line
+  
+
+</script>
 
 </body>
 </html>   
