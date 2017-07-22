@@ -45,6 +45,11 @@ app.use("/data/last_eval_rating.csv",function(req,res){
   res.sendFile(dataPath + "last_eval_rating.csv");
 });
 
+app.use("/data/dept_rate_size.csv",function(req,res){
+  console.log("Loading CSV file.");
+  res.sendFile(dataPath + "dept_rate_size.csv");
+});
+
 app.use("/favicon.ico", function(req, res){
 	res.sendFile(assetPath+"img/favicon.ico");
 });

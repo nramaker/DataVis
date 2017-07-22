@@ -77,7 +77,7 @@ This is place to put content. You can put slider, short description about your w
 
   //initialize X variables
   var xValue = function(d){
-      return d.Number_of_Records; //the column that we're plotting on the X plain
+      return d.Calories; //the column that we're plotting on the X plain
       },
       xScale = d3.scale.linear().range([0, width]),
       xMap = function(d){
@@ -87,8 +87,8 @@ This is place to put content. You can put slider, short description about your w
 
   //initialize Y variables
   var yValue = function(d){
-  //        console.log(d.Left_Company);
-        return d.Left_Company;  //the column that we're plotting on the Y plain
+        // console.log(d["Protein (g)"]);
+        return d["Protein (g)"];  //the column that we're plotting on the Y plain
       },
       yScale = d3.scale.linear().range([height, 0]),
       yMap = function(d){
@@ -99,7 +99,7 @@ This is place to put content. You can put slider, short description about your w
 
   //chose how to color the values
   var cValue = function(d){
-    return d.Department;
+    return d.Manufacturer;
   };
 
   //color scheme
@@ -111,24 +111,20 @@ This is place to put content. You can put slider, short description about your w
       .style("opacity", 0);
 
   //magically draw chart using D3
-  d3.csv("data/dept_rate_size.csv", function(error, data){
+  d3.csv("data/cereal.csv", function(error, data){
     data.forEach(function(d){
-      d.Number_of_Records = +d.Number_of_Records;
-      d.Left_Company = +d.Left_Company;
+      d.Calories = +d.Calories;
+      d["Protein (g)"] = +d["Protein (g)"];
     });
 
     var xMin = d3.min(data, xValue)-1;
-    var xMax = d3.max(data, xValue)+100;
+    var xMax = d3.max(data, xValue)+1;
     var yMin = d3.min(data, yValue)-1;
-    var yMax = d3.max(data, yValue)+100;
+    var yMax = d3.max(data, yValue)+1;
 
     xScale.domain([xMin, xMax]);
     yScale.domain([yMin, yMax]);
 
-    var line = d3.svg.line()
-      .x(function(d) { return xScale(d.Number_of_Records); })
-      .y(function(d) { return yScale(d.Left_Company); });
-    
     //draw the X Axis
     g.append("g")
           .attr("class", "x axis")
@@ -139,9 +135,9 @@ This is place to put content. You can put slider, short description about your w
           .attr("x", width)
           .attr("y", -6)
           .style("text-anchor", "end")
-          .text("Department Population");
+          .text("Calories");
 
-    // draw the Y Axis
+    //draw the Y Axis
     g.append("g")
           .attr("class", "y axis")
           .call(yAxis)
@@ -151,7 +147,7 @@ This is place to put content. You can put slider, short description about your w
           .attr("y", 6)
           .attr("dy", ".8em")
           .style("text-anchor", "end")
-          .text("Departure Count");
+          .text("Protein (g)");
 
     //draw the points
     g.selectAll(".dot")
@@ -159,7 +155,7 @@ This is place to put content. You can put slider, short description about your w
       .enter()
         .append("circle")
           .attr("class", "dot")
-          .attr("r", function(d){ return d.Number_of_Records/150; }) //TODO: scale the dot size
+          .attr("r", 3.5) //TODO: scale the dot size
           .attr("cx", xMap)
           .attr("cy", yMap)
           .style("fill", function(d){
@@ -169,9 +165,9 @@ This is place to put content. You can put slider, short description about your w
                 tooltip.transition()
                     .duration(200)
                     .style("opacity",.9);
-                tooltip.html(d["Department"]+"<br/> ("+yValue(d) +" left of "+ xValue(d)+")")
-                    .style("left", (d3.event.pageX + 15) + "px")
-                    .style("top", (d3.event.pageY + 10) + "px");
+                tooltip.html(d["Cereal Name"]+"<br/> ("+xValue(d)+","+yValue(d)+")")
+                    .style("left", (d3.event.pageX + 5) + "px")
+                    .style("top", (d3.event.pageY - 28) + "px");
              })
           .on("mouseout", function(d){
                 tooltip.transition()
@@ -180,66 +176,13 @@ This is place to put content. You can put slider, short description about your w
           });
 
     //draw the trend line
-    var xSeries = data.map(function(d) {return parseFloat(d.Number_of_Records);});
-    var ySeries = data.map(function(d) { return parseFloat(d.Left_Company); });
-    
-    var leastSquaresCoeff = leastSquares(xSeries, ySeries);
-    
-    // apply the reults of the least squares regression
-    var x1 = 1;
-    var y1 = leastSquaresCoeff[0] + leastSquaresCoeff[1];
-    var x2 = xMax;
-    var y2 = leastSquaresCoeff[0] * xMax + leastSquaresCoeff[1];
-    var trendData = [[x1,y1,x2,y2]];
-    
-    var trendline = svg.selectAll(".trendline")
-      .data(trendData);
-      
-    trendline.enter()
-      .append("line")
-      .attr("class", "trendline")
-      .attr("x1", xScale(xMin))
-      .attr("y1", yScale(findYOfLine(xMin, leastSquaresCoeff[0], leastSquaresCoeff[1])))
-      .attr("x2", xScale(xMax))
-      .attr("y2", yScale(findYOfLine(xMax, leastSquaresCoeff[0], leastSquaresCoeff[1])))
-      .attr("stroke", "black")
-      .attr("stroke-width", 2)
-      .attr("transform", "translate(40,20)")
-      .on("mouseover", function(d){
-                tooltip.transition()
-                    .duration(200)
-                    .style("opacity",.9);
-                tooltip.html("trendline: " + leastSquaresCoeff[0].toFixed(2) + "x + " + 
-                    leastSquaresCoeff[1].toFixed(2)+"<br/> r-sq: " + leastSquaresCoeff[2].toFixed(3)+")")
-                    .style("left", (d3.event.pageX + 15) + "px")
-                    .style("top", (d3.event.pageY + 10) + "px");
-             })
-      .on("mouseout", function(d){
-                tooltip.transition()
-                    .duration(500)
-                    .style("opacity",0);
-       });
-    //   // display equation on the chart
-    // svg.append("text")
-    //   .text("trendline: " + leastSquaresCoeff[0].toFixed(2) + "x + " + 
-    //     leastSquaresCoeff[1].toFixed(2))
-    //   .attr("class", "text-label")
-    //   .attr("x", function(d) {return xMin ;})
-    //   .attr("y", function(d) {return yMin + 10;});
-    
-    // // display r-square on the chart
-    // svg.append("text")
-    //   .text("r-sq: " + leastSquaresCoeff[2].toFixed(3))
-    //   .attr("class", "text-label")
-    //   .attr("x", function(d) {return xMin ;})
-    //   .attr("y", function(d) {return yMin +30;});
 
     //draw the legend
     var legend = svg.selectAll(".legend")
         .data(color.domain())
         .enter().append("g")
            .attr("class", "legend")
-           .attr("transform", function(d, i) { return "translate(0," + (i * 20+200) + ")"; });
+           .attr("transform", function(d, i) { return "translate(0," + i * 20 + ")"; });
     legend.append("rect")
            .attr("x", width+18)
            .attr("width", 18)
@@ -254,32 +197,7 @@ This is place to put content. You can put slider, short description about your w
 
   });
 
-// returns slope, intercept and r-square of the line
-  function leastSquares(xSeries, ySeries) {
-    var reduceSumFunc = function(prev, cur) { return prev + cur; };
-    
-    var xBar = xSeries.reduce(reduceSumFunc) * 1.0 / xSeries.length;
-    var yBar = ySeries.reduce(reduceSumFunc) * 1.0 / ySeries.length;
 
-    var ssXX = xSeries.map(function(d) { return Math.pow(d - xBar, 2); })
-      .reduce(reduceSumFunc);
-    
-    var ssYY = ySeries.map(function(d) { return Math.pow(d - yBar, 2); })
-      .reduce(reduceSumFunc);
-      
-    var ssXY = xSeries.map(function(d, i) { return (d - xBar) * (ySeries[i] - yBar); })
-      .reduce(reduceSumFunc);
-      
-    var slope = ssXY / ssXX;
-    var intercept = yBar - (xBar * slope);
-    var rSquare = Math.pow(ssXY, 2) / (ssXX * ssYY);
-    
-    return [slope, intercept, rSquare];
-  }
-
-  function findYOfLine(x, slope, intercept){
-    return slope*x + intercept;
-  }
 
 </script>
 
