@@ -59,6 +59,10 @@ app.use("/favicon.ico", function(req, res){
 	res.sendFile(assetPath+"img/favicon.ico");
 });
 
+app.use("/data/dept_table.csv", function(req, res){
+   res.sendFile(dataPath + "dept_table.csv");
+});
+
 //REMOVE THESE ROUTES
 app.use("/data/segments_table2.csv",function(req,res){
   console.log("Loading CSV file.");

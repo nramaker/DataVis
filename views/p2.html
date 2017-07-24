@@ -13,6 +13,10 @@
     .bs-example{
       margin: 20px;
     }
+    td, th {
+      padding: 1px 4px;
+      min-width: 200px;
+    }
 </style>
 </head>
 <body>
@@ -38,12 +42,148 @@
     </ul>
 </div>
 <div class="jumbotron"> <p>
-<h1>This is page 2.</h1>
+<h2>Predictors of Employee Departures</h2>
 
 
 This is place to put content. You can put slider, short description about your website and place some links for navigation.
 </p></div>
     
+<div id="stackedbars">
+  <h3>Distribution of Salary Among Departures</h3>
+  <!-- <svg id="chart" width="800" height="500"></svg></div> -->
+</body>
+<script>
 
+  // var svg = d3.select("#chart");
+
+  // var margin = {top: 20, right: 180, bottom: 30, left: 40},
+  //   width = +svg.attr("width") - margin.left - margin.right,
+  //   height = +svg.attr("height") - margin.top - margin.bottom;
+
+  // var g = svg.append("g").attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+
+  var lowestOfRow = function(d){
+
+    if(d.Low <= d.Medium){
+      if( d.Low <= d.High)
+        return d.Low;
+      return d.High;
+    }
+    else{
+      if( d.Medium <= d.High)
+        return d.Medium;
+      return d.High;
+    }
+  }
+  var highestOfRow = function(d){
+    if(d.Low >= d.Medium){
+      if( d.Low >= d.High)
+        return d.Low;
+      return d.High;
+    }
+    else{
+      if( d.Medium >= d.High)
+        return d.Medium;
+      return d.High;
+    }
+  }
+
+  d3.csv("../data/dept_table.csv", function(error, data) {
+    if (error){
+      console.log("couldn't find csv");
+      throw error;  
+    } 
+    data.forEach(function(d){
+      d.Low = +d.Low;
+      d.Medium = +d.Medium;
+      d.High = +d.High;
+    });
+
+    var minDepart = d3.min(data, lowestOfRow);
+    var maxDepart = d3.max(data, highestOfRow);
+
+    var scale = d3.scale.linear().domain([minDepart, maxDepart]).range([0, 1]);
+
+
+// Using RBG
+var colors = [{
+   r:255,
+   g:255,
+   b:255
+},{
+    r: 245,
+    g: 251,
+    b: 198
+}, {
+    r: 196,
+    g: 234,
+    b: 217
+  }, {
+    r: 160,
+    g: 219,
+    b: 182
+}, {
+    r: 125,
+    g: 205,
+    b: 187
+}, {
+    r: 65,
+    g: 183,
+    b: 196
+}];
+    
+
+    var table = d3.select('body').append('table')
+    var thead = table.append('thead')
+    var tbody = table.append('tbody');
+
+    var columns = ["Department", "Low", "Medium", "High"];
+    // append the header row
+    thead.append('tr')
+      .selectAll('th')
+      .data(columns).enter()
+      .append('th')
+        .text(function (column) { return column; });
+
+    // create a row for each object in the data
+    var rows = tbody.selectAll('tr')
+      .data(data)
+      .enter()
+      .append('tr');
+
+    // create a cell in each row for each column
+
+    var cells = rows.selectAll('td')
+      .data(function (row) {
+        return columns.map(function (column) {
+          return {column: column, value: row[column]};
+        });
+      })
+      .enter()
+      .append('td')
+        .style('background-color', function (d, i) {
+          if(i===0)
+            return 'rgba(' + colors[0].r + ',' + colors[0].g + ',' + colors[0].b + ',' + 1 + ')';
+          var colorIndex = chooseColor(scale(d.value));
+          return 'rgba(' + colors[colorIndex].r + ',' + colors[colorIndex].g + ',' + colors[colorIndex].b + ',' + 0.75 + ')';
+          })
+        .text(function (d) { return d.value; });
+
+  });
+
+  function chooseColor(scale)
+  {
+    if(scale<0.20)
+      return 1;
+    if(scale<0.40)
+      return 2;
+    if(scale<0.60)
+      return 3;
+    if(scale<0.8)
+      return 4;
+    return 5;
+  }
+</script>
 </body>
 </html>   
