@@ -9,6 +9,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/d3/3.4.5/d3.js"></script>
+<script type="text/javascript" src="/paramUtils.js"></script>
 <style type="text/css">
     .bs-example{
       margin: 20px;
@@ -30,11 +31,11 @@
     <ul class="pagination pagination-lg">
         <li class="disabled"><a href="#">&nbsp;</a></li>
         <li class="disabled"><a href="#">1</a></li>
-        <li><a href="page2">2</a></li>
-        <li><a href="page3">3</a></li>
-        <li><a href="page4">4</a></li>
-        <li><a href="page5">5</a></li>
-        <li><a href="page2">&raquo;</a></li>
+        <li><a href="javascript:window.location=buildArgs('page2')">2</a></li>
+        <li><a href="javascript:window.location=buildArgs('page3')">3</a></li>
+        <li><a href="javascript:window.location=buildArgs('page4')">4</a></li>
+        <li><a href="javascript:window.location=buildArgs('page5')">5</a></li>
+        <li><a href="javascript:window.location=buildArgs('page2')">&raquo;</a></li>
     </ul>
 </div>
 

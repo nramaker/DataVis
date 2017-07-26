@@ -55,29 +55,36 @@ app.use("/data/dept_size.csv",function(req,res){
   res.sendFile(dataPath + "dept_size.csv");
 });
 
-app.use("/favicon.ico", function(req, res){
-	res.sendFile(assetPath+"img/favicon.ico");
-});
-
 app.use("/data/dept_table.csv", function(req, res){
    res.sendFile(dataPath + "dept_table.csv");
 });
 
+
+//ASSET ROUTES
+
+app.use("/favicon.ico", function(req, res){
+	res.sendFile(assetPath+"img/favicon.ico");
+});
+
+app.use("/paramUtils.js", function(req, res){
+  res.sendFile(__dirname+"/paramUtils.js");
+});
+
 //REMOVE THESE ROUTES
-app.use("/data/segments_table2.csv",function(req,res){
-  console.log("Loading CSV file.");
-  res.sendFile(dataPath + "segments_table2.csv");
-});
+// app.use("/data/segments_table2.csv",function(req,res){
+//   console.log("Loading CSV file.");
+//   res.sendFile(dataPath + "segments_table2.csv");
+// });
 
-app.use("/data/cereal.csv",function(req,res){
-  console.log("Loading CSV file.");
-  res.sendFile(dataPath + "cereal.csv");
-});
+// app.use("/data/cereal.csv",function(req,res){
+//   console.log("Loading CSV file.");
+//   res.sendFile(dataPath + "cereal.csv");
+// });
 
-app.use("/data/flare.csv",function(req,res){
-  console.log("Loading CSV file.");
-  res.sendFile(dataPath + "flare.csv");
-});
+// app.use("/data/flare.csv",function(req,res){
+//   console.log("Loading CSV file.");
+//   res.sendFile(dataPath + "flare.csv");
+// });
 
 
 
