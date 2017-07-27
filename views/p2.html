@@ -151,29 +151,18 @@ This is place to put content. You can put slider, short description about your w
   setCheckboxValues();
 
   var lowestOfRow = function(d){
-
-    if(d.Low <= d.Medium){
-      if( d.Low <= d.High)
-        return d.Low;
-      return d.High;
-    }
-    else{
-      if( d.Medium <= d.High)
-        return d.Medium;
-      return d.High;
-    }
+    var numArray = [0];
+    if(d.Low!=undefined) numArray.push(d.Low);
+    if(d.Medium!=undefined) numArray.push(d.Medium);
+    if(d.High!=undefined) numArray.push(d.High);
+    return Math.min.apply(null, numArray);
   }
   var highestOfRow = function(d){
-    if(d.Low >= d.Medium){
-      if( d.Low >= d.High)
-        return d.Low;
-      return d.High;
-    }
-    else{
-      if( d.Medium >= d.High)
-        return d.Medium;
-      return d.High;
-    }
+    var numArray = [0];
+    if(d.Low!=undefined) numArray.push(d.Low);
+    if(d.Medium!=undefined) numArray.push(d.Medium);
+    if(d.High!=undefined) numArray.push(d.High);
+    return Math.max.apply(null, numArray);
   }
 
   d3.csv("../data/dept_table.csv", function(error, data) {
@@ -187,8 +176,14 @@ This is place to put content. You can put slider, short description about your w
       d.High = +d.High;
     });
 
+    data = data.filter(isFiltered);
+    data = data.map(removeFilteredSalaries);
+
     var minDepart = d3.min(data, lowestOfRow);
     var maxDepart = d3.max(data, highestOfRow);
+
+    console.log("minDepart "+minDepart);
+    console.log("maxDepart "+maxDepart);
 
     var scale = d3.scale.linear().domain([minDepart, maxDepart]).range([0, 1]);
 
@@ -226,7 +221,8 @@ var colors = [{
     var thead = table.append('thead')
     var tbody = table.append('tbody');
 
-    var columns = ["Department", "Low", "Medium", "High"];
+    // var columns = ["Department", "Low", "Medium", "High"];
+    var columns = Object.keys(data[0]);
     // append the header row
     thead.append('tr')
       .selectAll('th')
@@ -272,6 +268,43 @@ var colors = [{
       return 4;
     return 5;
   }
+
+ function getColumns(d){
+   return Object.keys(d);
+
+ }
+
+ function isFiltered(d){
+  if("Technical".localeCompare(d.Department)===0 && isFilterApplied("filterTech"))  return false; 
+  if("Human Resources".localeCompare(d.Department)===0 && isFilterApplied("filterHR")) return false;   
+  if("Support".localeCompare(d.Department)===0 && isFilterApplied("filterSupport")) return false;
+  if("Sales".localeCompare(d.Department)===0 && isFilterApplied("filterSales")) return false;
+  if("Research and Development".localeCompare(d.Department)===0 && isFilterApplied("filterRND")) return false;
+  if("Product Management".localeCompare(d.Department)===0 && isFilterApplied("filterPM")) return false;
+  if("Marketing".localeCompare(d.Department)===0 && isFilterApplied("filterMarketing")) return false;
+  if("Management".localeCompare(d.Department)===0 && isFilterApplied("filterMgmt")) return false;
+  if("IT".localeCompare(d.Department)===0 && isFilterApplied("filterIT")) return false;
+  if("Accounting".localeCompare(d.Department)===0 && isFilterApplied("filterAccounting")) return false;
+
+  return true;
+}
+
+function removeFilteredSalaries(d){
+  if(isFilterApplied("filterHigh")){
+    //console.log("Filtering high");
+    delete d.High;
+  }
+  if(isFilterApplied("filterMed")){
+    //console.log("Filtering Medium");
+    delete d.Medium;
+  }
+  if(isFilterApplied("filterLow")){
+   // console.log("Filtering Low");
+    delete d.Low;
+  }
+  return d;
+}
+
 </script>
 </body>
 </html>   
