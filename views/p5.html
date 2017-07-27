@@ -176,7 +176,10 @@ d3.csv("../data/last_eval_rating.csv", type, function(error, data) {
 	;
 
   //apply filters before building chart
-  var columns = data.columns;
+  data = data.map(appFilter);
+  var columns = getColumns(data[0]);
+
+  //var columns = data.columns;
 	data = data.map(appFilter);
 	data.columns = columns;
 
@@ -243,22 +246,43 @@ function type(d, i, columns) {
 function appFilter(d){
 	if(isFilterApplied("filterHigh")){
 		console.log("Filtering high");
-		d.high=0;
+		delete d.high;
+		//d.high=0;
 	}
 	if(isFilterApplied("filterMed")){
 		console.log("Filtering Medium");
-		d.medium=0;
+		delete d.medium;
+		///d.medium=0;
 	}
 	if(isFilterApplied("filterLow")){
 		console.log("Filtering Low");
-		d.low=0;
+		delete d.low;
+		//d.low=0;
 	}
 	return d;
 }
+
+// function filterSal(d){
+
+// 	if(isFilterApplied("filterHigh")) delete;
+//    else if("medium".localeCompare(d.Department)===0 && isFilterApplied("filterMed")) return false;
+//    else if("low".localeCompare(d.Department)===0 && isFilterApplied("filterLow")) return false;
+
+//    return true;
+// }
+
+function getColumns(d){
+	var cols = Object.keys(d);
+	var totInd = cols.indexOf("total");
+	if(totInd>=0)
+		cols.splice(totInd,1);
+	// var ratInd = cols.indexOf("rating");
+	// if(ratInd>=0)
+	// 	cols.splice(ratInd,1);
+
+	return cols;
+}
 </script>
-
-
-		
 
 </body>
 </html>   

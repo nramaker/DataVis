@@ -214,6 +214,8 @@ This is place to put content. You can put slider, short description about your w
       // d.Left_Company = +d.Left_Company;
     });
 
+    data = data.filter(filterDepts);
+
     var xMin = d3.min(data, xValue)-1;
     var xMax = d3.max(data, xValue)+100;
     var yMin = d3.min(data, yValue)-1;
@@ -363,6 +365,21 @@ This is place to put content. You can put slider, short description about your w
 
   function findYOfLine(x, slope, intercept){
     return slope*x + intercept;
+  }
+
+  function filterDepts(d){
+    if("technical".localeCompare(d.Department)===0 && isFilterApplied("filterTech")) return false;
+    else if("hr".localeCompare(d.Department)===0 && isFilterApplied("filterHR")) return false;
+    else if("support".localeCompare(d.Department)===0 && isFilterApplied("filterSupport")) return false;
+    else if("sales".localeCompare(d.Department)===0 && isFilterApplied("filterSales")) return false;
+    else if("RandD".localeCompare(d.Department)===0 && isFilterApplied("filterRND")) return false;
+    else if("product_mng".localeCompare(d.Department)===0 && isFilterApplied("filterPM")) return false;
+    else if("marketing".localeCompare(d.Department)===0 && isFilterApplied("filterMarketing")) return false;
+    else if("management".localeCompare(d.Department)===0 && isFilterApplied("filterMgmt")) return false;
+    else if("IT".localeCompare(d.Department)===0 && isFilterApplied("filterIT")) return false;
+    else if("accounting".localeCompare(d.Department)===0 && isFilterApplied("filterAccounting")) return false;
+
+  return true;
   }
 
   function appFilter(d){
