@@ -23,14 +23,13 @@ function parseArgs(){
 	console.log("Parsing Arguments");
 
 	var URL = window.location.href;
-	console.log("current URL="+URL);
 
  	var searchParams = new URLSearchParams(URL);
 
  	//Iterate the search parameters.
-	for (let p of searchParams) {
-  		console.log(p);
-	}
+	// for (let p of searchParams) {
+ //  		console.log(p);
+	// }
 
 	filterHigh = searchParams.get("filterHigh");
 	if(filterHigh===null) filterHigh = false;

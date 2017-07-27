@@ -70,26 +70,6 @@ This is place to put content. You can put slider, short description about your w
       </td>
       <td border="1">
         <table class="filter" valign="top">
-          <!-- <tr class="filter" >
-              <th><h3>Salary</h3></th>
-          </tr>
-          <tr>
-           <td><input type="checkbox" id="filterAllSal" name="filterAllSal" onclick="allSalaryRanges('page3', this);">
-            <label for="filterAllSal" onclick="toggleCheckbox('filterAllSal'); return false;">ALL</label></td>
-          </tr>
-          <tr>
-           <td><input type="checkbox" id="filterHigh" name="filterHigh" onclick="applyFilter('page3', this);">
-            <label for="filterHigh" onclick="toggleCheckbox('filterHigh'); return false;">High Salary</label></td>
-          </tr>
-          <tr>
-            <td><input type="checkbox" id="filterMed" name="filterMed" onclick="applyFilter('page3', this);">
-            <label for="filterMed" onclick="toggleCheckbox('filterMed'); return false;">Medium Salary</label></td>
-          </tr>
-          <tr>
-            <td><input type="checkbox" id="filterLow" name="filterLow" onclick="applyFilter('page3', this);">
-            <label for="filterLow" onclick="toggleCheckbox('filterLow'); return false;">Low Salary</label></td>
-          </tr> -->
-
           <tr >
               <th><h3>Department</h3></th>
           </tr>
@@ -154,8 +134,6 @@ var svg = d3.select("svg"),
 
 var format = d3.format(",d");
 
-// var color = d3.scaleSequential(d3.scale.category20())
-//     .domain([-4, 4]);
 var color = d3.scaleOrdinal(d3.schemeCategory20);
 
 var stratify = d3.stratify()
@@ -167,10 +145,6 @@ var pack = d3.pack()
 
 d3.csv("data/dept_size.csv", function(error, data) {
   if (error) throw error;
-
-    // data.forEach(function(d){
-    //   appFilter(d);
-    // });
 
   data = data.filter(isFiltered);
 
@@ -246,8 +220,8 @@ function pickColor(d){
   if(d.id==="all")
     return color(0);
   if(d.id==="all.sales" || d.id==="all.support" || d.id==="all.technical")
-          return color(1);
-        return color(2);
+    return color(1);
+  return color(2);
 }
 
 function isFiltered(d){
@@ -264,22 +238,6 @@ function isFiltered(d){
   
   return true;
 }
-
-// function appFilter(d){
-
-
-//     if("all.technical".localeCompare(d.id)===0 && isFilterApplied("filterTech"))  d.value=0;
-//     else if("all.hr".localeCompare(d.id)===0 && isFilterApplied("filterHR")) d.value=0;
-//     else if("all.support".localeCompare(d.id)===0 && isFilterApplied("filterSupport")) d.value=0;
-//     else if("all.sales".localeCompare(d.id)===0 && isFilterApplied("filterSales")) d.value=0;
-//     else if("all.RandD".localeCompare(d.id)===0 && isFilterApplied("filterRND")) d.value=0;
-//     else if("all.product_mng".localeCompare(d.id)===0 && isFilterApplied("filterPM")) d.value=0;
-//     else if("all.marketing".localeCompare(d.id)===0 && isFilterApplied("filterMarketing")) d.value=0;
-//     else if("all.management".localeCompare(d.id)===0 && isFilterApplied("filterMgmt"))d.value=0;
-//     else if("all.IT".localeCompare(d.id)===0 && isFilterApplied("filterIT")) d.value=0;
-//     else if("all.accounting".localeCompare(d.id)===0 && isFilterApplied("filterAccounting")) d.value=0;
-//   return d;
-// }
 
 </script>
 </html>   

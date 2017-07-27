@@ -63,13 +63,9 @@ This is place to put content. You can put slider, short description about your w
   <table>
     <tr>
       <td id="tableData" width=800; height=500; valign="top">
- <!--        <table width="800" height="500">
-          <tr> -->
             <div >
             <h3>Distribution of Salary Among Departures</h3>
             </div>
-<!--           </tr>
-      </table> -->
     </td>
           <td border="1">
         <table class="filter" valign="top">
@@ -151,7 +147,7 @@ This is place to put content. You can put slider, short description about your w
   setCheckboxValues();
 
   var lowestOfRow = function(d){
-    var numArray = [0];
+    var numArray = [999999];
     if(d.Low!=undefined) numArray.push(d.Low);
     if(d.Medium!=undefined) numArray.push(d.Medium);
     if(d.High!=undefined) numArray.push(d.High);
@@ -181,9 +177,6 @@ This is place to put content. You can put slider, short description about your w
 
     var minDepart = d3.min(data, lowestOfRow);
     var maxDepart = d3.max(data, highestOfRow);
-
-    console.log("minDepart "+minDepart);
-    console.log("maxDepart "+maxDepart);
 
     var scale = d3.scale.linear().domain([minDepart, maxDepart]).range([0, 1]);
 

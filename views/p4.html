@@ -84,26 +84,6 @@ This is place to put content. You can put slider, short description about your w
       </td>
       <td border="1">
         <table class="filter" valign="top">
-<!--           <tr class="filter" >
-              <th><h3>Salary</h3></th>
-          </tr>
-          <tr>
-           <td><input type="checkbox" id="filterAllSal" name="filterAllSal" onclick="allSalaryRanges('page4', this);">
-            <label for="filterAllSal" onclick="toggleCheckbox('filterAllSal'); return false;">ALL</label></td>
-          </tr>
-          <tr>
-           <td><input type="checkbox" id="filterHigh" name="filterHigh" onclick="applyFilter('page4', this);">
-            <label for="filterHigh" onclick="toggleCheckbox('filterHigh'); return false;">High Salary</label></td>
-          </tr>
-          <tr>
-            <td><input type="checkbox" id="filterMed" name="filterMed" onclick="applyFilter('page4', this);">
-            <label for="filterMed" onclick="toggleCheckbox('filterMed'); return false;">Medium Salary</label></td>
-          </tr>
-          <tr>
-            <td><input type="checkbox" id="filterLow" name="filterLow" onclick="applyFilter('page4', this);">
-            <label for="filterLow" onclick="toggleCheckbox('filterLow'); return false;">Low Salary</label></td>
-          </tr> -->
-
           <tr >
               <th><h3>Department</h3></th>
           </tr>
@@ -210,8 +190,6 @@ This is place to put content. You can put slider, short description about your w
     data.forEach(function(d){
 
       appFilter(d);
-      // d.Number_of_Records = +d.Number_of_Records;
-      // d.Left_Company = +d.Left_Company;
     });
 
     data = data.filter(filterDepts);
@@ -426,8 +404,6 @@ This is place to put content. You can put slider, short description about your w
       d.Number_of_Records=0;
       d.Left_Company = 0;
     }
-
-
   return d;
 }
 
