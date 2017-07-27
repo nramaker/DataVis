@@ -169,3 +169,20 @@ function allDepartments(page, checkbox){
 
 	window.location = buildArgs(page);
 }
+
+function isFilterApplied(filterName){
+	if("filterHigh".localeCompare(filterName)===0) return filterHigh;
+	if("filterMed".localeCompare(filterName)===0) return filterMed;
+	if("filterLow".localeCompare(filterName)===0) return filterLow;
+
+	if("filterAccounting".localeCompare(filterName)===0) return filterAccounting;
+	if("filterHR".localeCompare(filterName)===0) return filterHR;
+	if("filterIT".localeCompare(filterName)===0) return filterIT;
+	if("filterMgmt".localeCompare(filterName)===0) return filterMgmt;
+	if("filterMarketing".localeCompare(filterName)===0) return filterMarketing;
+	if("filterPM".localeCompare(filterName)===0) return filterPM;
+	if("filterRND".localeCompare(filterName)===0) return filterRND;
+	if("filterSales".localeCompare(filterName)===0) return filterSales;
+	if("filterSupport".localeCompare(filterName)===0) return filterSupport;
+	if("filterTech".localeCompare(filterName)===0) return filterTech;
+}

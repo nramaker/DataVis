@@ -22,8 +22,13 @@
 		}
 		table .filter {
    			width: 100%;
-    		height: 100%;
+    		height: 500px;
 		}
+		td {
+     vertical-align: top;
+    }
+
+
 </style>
 </head>
 <body>
@@ -57,14 +62,14 @@ This is place to put content. You can put slider, short description about your w
 	<table>
 		<tr>
 			<td>
-				<div id="stackedbars">
+				<div id="stackedbars"  width="800" height="500">
 					<h3>Rating on Last Evaluation</h3>
 					<svg id="chart" width="800" height="500"></svg>
 				</div>
 			</td>
 			<td border="1">
 				<table class="filter" valign="top">
-  				<tr class="filter" >
+  				<tr >
     					<th><h3>Salary</h3></th>
   				</tr>
   				<tr>
@@ -83,8 +88,9 @@ This is place to put content. You can put slider, short description about your w
    				  <td><input type="checkbox" id="filterLow" name="filterLow" onclick="applyFilter('page5', this);">
 					  <label for="filterLow" onclick="toggleCheckbox('filterLow'); return false;">Low Salary</label></td>
   				</tr>
+  				<tr class="filter"></tr>
 
-  				<tr class="filter" >
+  				<!-- <tr class="filter" >
     					<th><h3>Department</h3></th>
   				</tr>
   				<tr>
@@ -130,7 +136,7 @@ This is place to put content. You can put slider, short description about your w
    				  <td><input type="checkbox" id="filterTech" name="filterTech" onclick="applyFilter('page5', this);">
 					  <label for="filterTech" onclick="toggleCheckbox('filterTech'); return false;">Technical</label></td>
   				</tr>
-
+ -->
 				</table>
 			</td>
 		</tr>
@@ -168,6 +174,11 @@ d3.csv("../data/last_eval_rating.csv", type, function(error, data) {
 	data.sort(function(a, b) {
 		return a.rating - b.rating; })
 	;
+
+  //apply filters before building chart
+  var columns = data.columns;
+	data = data.map(appFilter);
+	data.columns = columns;
 
 	x.domain(data.map(function(d) { return d.rating; }));
 	y.domain([0, d3.max(data, function(d) { return d.total; })]).nice();
@@ -228,7 +239,25 @@ function type(d, i, columns) {
 	d.total = t;
 	return d;
 }
+
+function appFilter(d){
+	if(isFilterApplied("filterHigh")){
+		console.log("Filtering high");
+		d.high=0;
+	}
+	if(isFilterApplied("filterMed")){
+		console.log("Filtering Medium");
+		d.medium=0;
+	}
+	if(isFilterApplied("filterLow")){
+		console.log("Filtering Low");
+		d.low=0;
+	}
+	return d;
+}
 </script>
+
+
 		
 
 </body>

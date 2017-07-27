@@ -32,6 +32,7 @@
       pointer-events: none;
     }
 
+
     tr .filter {
         width: 100px;
         height: 50px;
@@ -39,7 +40,11 @@
     }
     table .filter {
         width: 100%;
-        height: 100%;
+        height: 500px;
+    }
+
+    td {
+     vertical-align: top;
     }
 </style>
 </head>
@@ -70,16 +75,16 @@
 
 This is place to put content. You can put slider, short description about your website and place some links for navigation.
 </p></div>
-<table>
+<table > 
     <tr>
       <td>
-        <div id="scatterPlot">
+        <div id="scatterPlot" valign="top">
         <h3>Departure Rate by Department</h3>
         <svg id="chart" width="800" height="500"></svg></div>
       </td>
       <td border="1">
         <table class="filter" valign="top">
-          <tr class="filter" >
+<!--           <tr class="filter" >
               <th><h3>Salary</h3></th>
           </tr>
           <tr>
@@ -97,9 +102,9 @@ This is place to put content. You can put slider, short description about your w
           <tr>
             <td><input type="checkbox" id="filterLow" name="filterLow" onclick="applyFilter('page4', this);">
             <label for="filterLow" onclick="toggleCheckbox('filterLow'); return false;">Low Salary</label></td>
-          </tr>
+          </tr> -->
 
-          <tr class="filter" >
+          <tr >
               <th><h3>Department</h3></th>
           </tr>
           <tr>
@@ -145,6 +150,7 @@ This is place to put content. You can put slider, short description about your w
             <td><input type="checkbox" id="filterTech" name="filterTech" onclick="applyFilter('page4', this);">
             <label for="filterTech" onclick="toggleCheckbox('filterTech'); return false;">Technical</label></td>
           </tr>
+          <tr class="filter"></tr>
 
         </table>
       </td>
@@ -202,6 +208,8 @@ This is place to put content. You can put slider, short description about your w
   //magically draw chart using D3
   d3.csv("data/dept_rate_size.csv", function(error, data){
     data.forEach(function(d){
+
+      appFilter(d);
       d.Number_of_Records = +d.Number_of_Records;
       d.Left_Company = +d.Left_Company;
     });
@@ -356,6 +364,55 @@ This is place to put content. You can put slider, short description about your w
   function findYOfLine(x, slope, intercept){
     return slope*x + intercept;
   }
+
+  function appFilter(d){
+   d.Number_of_Records = +d.Number_of_Records;
+   d.Left_Company = +d.Left_Company;
+
+    if("technical".localeCompare(d.Department)===0 && isFilterApplied("filterTech")) {
+      d.Number_of_Records=0;
+      d.Left_Company = 0;
+    }
+    else if("hr".localeCompare(d.Department)===0 && isFilterApplied("filterHR")) {
+      d.Number_of_Records=0;
+      d.Left_Company = 0;
+    }
+    else if("support".localeCompare(d.Department)===0 && isFilterApplied("filterSupport")) {
+      d.Number_of_Records=0;
+      d.Left_Company = 0;
+    }
+    else if("sales".localeCompare(d.Department)===0 && isFilterApplied("filterSales")) {
+      d.Number_of_Records=0;
+      d.Left_Company = 0;
+    }
+    else if("RandD".localeCompare(d.Department)===0 && isFilterApplied("filterRND")) {
+      d.Number_of_Records=0;
+      d.Left_Company = 0;
+    }
+    else if("product_mng".localeCompare(d.Department)===0 && isFilterApplied("filterPM")) {
+      d.Number_of_Records=0;
+      d.Left_Company = 0;
+    }
+    else if("marketing".localeCompare(d.Department)===0 && isFilterApplied("filterMarketing")) {
+      d.Number_of_Records=0;
+      d.Left_Company = 0;
+    }
+    else if("management".localeCompare(d.Department)===0 && isFilterApplied("filterMgmt")) {
+      d.Number_of_Records=0;
+      d.Left_Company = 0;
+    }
+    else if("IT".localeCompare(d.Department)===0 && isFilterApplied("filterIT")) {
+      d.Number_of_Records=0;
+      d.Left_Company = 0;
+    }
+    else if("accounting".localeCompare(d.Department)===0 && isFilterApplied("filterAccounting")) {
+      d.Number_of_Records=0;
+      d.Left_Company = 0;
+    }
+
+
+  return d;
+}
 
 </script>
 
