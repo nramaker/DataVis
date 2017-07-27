@@ -70,29 +70,16 @@ app.use("/paramUtils.js", function(req, res){
   res.sendFile(__dirname+"/paramUtils.js");
 });
 
-//REMOVE THESE ROUTES
-// app.use("/data/segments_table2.csv",function(req,res){
-//   console.log("Loading CSV file.");
-//   res.sendFile(dataPath + "segments_table2.csv");
-// });
-
-// app.use("/data/cereal.csv",function(req,res){
-//   console.log("Loading CSV file.");
-//   res.sendFile(dataPath + "cereal.csv");
-// });
-
-// app.use("/data/flare.csv",function(req,res){
-//   console.log("Loading CSV file.");
-//   res.sendFile(dataPath + "flare.csv");
-// });
-
-
 
 app.use("*",function(req,res){
   console.log("Didn't find file.");
   res.sendFile(path + "404.html");
 });
 
-app.listen(3000,function(){
-  console.log("Live at Port 3000");
+// app.listen(3000,function(){
+//   console.log("Live at Port 3000");
+// });
+
+app.listen(process.env.PORT || 3000, function(){
+  console.log("Express server listening on port %d in %s mode", this.address().port, app.settings.env);
 });
