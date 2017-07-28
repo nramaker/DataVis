@@ -11,9 +11,42 @@
 <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/d3/3.4.5/d3.js"></script>
 <script type="text/javascript" src="/paramUtils.js"></script>
 <style type="text/css">
-    .bs-example{
-      margin: 20px;
+    td, th {
+      padding: 1px 4px;
+      min-width: 200px;
     }
+
+    tr .filter {
+        width: 100px;
+        height: 50px;
+        overflow:hidden;
+    }
+    table .filter {
+        width: 100%;
+        height: 100%;
+    }
+    td {
+     vertical-align: top;
+    }
+
+    .navCtrl h3{
+      margin: 20px;
+      vertical-align:bottom
+    }
+
+    .navCtrl a{
+       margin: 20px;
+      vertical-align:bottom
+    }
+    .jumbotron p{
+      font-size:small;
+    }
+    .jumbotron{
+      padding-top:12px;
+      padding-bottom:12px;
+    }
+</style>
+
 </style>
 </head>
 <body>
@@ -27,23 +60,35 @@
 </nav>
 </div>
 
-<div class="bs-example">
-    <ul class="pagination pagination-lg">
-        <li class="disabled"><a href="#">&nbsp;</a></li>
-        <li class="disabled"><a href="#">1</a></li>
+<table>
+  <tr>
+    <!-- <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td> -->
+    <td class="navCtrl"><h3>Navigation</h3></td>
+    <td>
+    <div class="bs-example">
+      <ul class="pagination pagination-lg">
+        <li class="disabled"><a href="/">&nbsp;</a></li>
+        <li class="disabled"><a href="/">1</a></li>
         <li><a href="javascript:window.location=buildArgs('page2')">2</a></li>
         <li><a href="javascript:window.location=buildArgs('page3')">3</a></li>
         <li><a href="javascript:window.location=buildArgs('page4')">4</a></li>
         <li><a href="javascript:window.location=buildArgs('page5')">5</a></li>
+        <li><a href="javascript:window.location=buildArgs('page6')">6</a></li>
         <li><a href="javascript:window.location=buildArgs('page2')">&raquo;</a></li>
-    </ul>
-</div>
+      </ul>
+    </div>
+    </td>
+    <td class="navCtrl"><a href="/" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">Clear Filters</a>   </td>
+  </tr>
+</table>
 
 <div class="jumbotron"> <p>
-<h2>This is page 1.</h2>
-
-
-This is place to put content. You can put slider, short description about your website and place some links for navigation.
+<h2>Can Employee Departures Be Pedicted Using HR Data?</h2>
+<br/>
+<p class="jumbo">Employee retention is a focal issue for many large companies, especially those in the technical industry where employees have many opportunities available to them.  Hiring a new employee is a long and expensive process, and once hired a company must invest several weeks or months of training into the employee before he or she will become a productive contributor. This cost and loss of productivity is compounded when the new employee is intended to replace a highly productive employee who has decided to leave the company due to low job satisfaction or to pursue a higher salary. 
+</p><p class="jumbo">
+To minimize the impact from employee turnover, many Human Resource departments are examining their employee data to find patterns in employee departures.  One such dataset was publicly released as part of a Kaggle competition to predict employee departures using machine learning, and can be downloaded from the following link: <a href="https://www.kaggle.com/ludobenistant/hr-analytics">https://www.kaggle.com/ludobenistant/hr-analytics</a>
+</p><p>
 </p></div>
     
 </body>

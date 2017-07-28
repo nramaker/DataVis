@@ -28,6 +28,9 @@ router.get("/page4",function(req,res){
 router.get("/page5",function(req,res){
   res.sendFile(path + "p5.html");
 });
+router.get("/page6",function(req,res){
+  res.sendFile(path + "p6.html");
+});
 
 router.get("/about",function(req,res){
   res.sendFile(path + "about.html");
@@ -57,6 +60,10 @@ app.use("/data/dept_size.csv",function(req,res){
 
 app.use("/data/dept_table.csv", function(req, res){
    res.sendFile(dataPath + "dept_table.csv");
+});
+
+app.use("/data/satis_level.csv", function(req, res){
+   res.sendFile(dataPath + "satis_level.csv");
 });
 
 

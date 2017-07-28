@@ -23,14 +23,14 @@
    			width: 100%;
     		height: 500px;
 		}
-	    td, th {
+		td, th {
      		padding: 1px 4px;
       		min-width: 200px;
-    	}
+    }
 		td {
-     		vertical-align: top;
-   	 	}
-   	 .navCtrl h3{
+     vertical-align: top;
+    }
+    .navCtrl h3{
       margin: 20px;
       vertical-align:bottom
     }
@@ -42,7 +42,7 @@
     .jumbotron p{
       font-size:small;
     }
-     .jumbotron{
+    .jumbotron{
       padding-top:12px;
       padding-bottom:12px;
     }
@@ -66,18 +66,18 @@
     <td>
     <div class="bs-example">
       <ul class="pagination pagination-lg">
-        <li><a href="javascript:window.location=buildArgs('page4')">&laquo;</a></li>
+        <li><a href="javascript:window.location=buildArgs('page5')">&laquo;</a></li>
         <li><a href="/">1</a></li>
         <li><a href="javascript:window.location=buildArgs('page2')">2</a></li>
         <li><a href="javascript:window.location=buildArgs('page3')">3</a></li>
         <li><a href="javascript:window.location=buildArgs('page4')">4</a></li>
-        <li class="disabled"><a href="javascript:window.location=buildArgs('page5')">5</a></li>
-        <li><a href="javascript:window.location=buildArgs('page6')">6</a></li>
-        <li><a href="javascript:window.location=buildArgs('page6')">&raquo;</a></li>
+        <li><a href="javascript:window.location=buildArgs('page5')">5</a></li>
+        <li class="disabled"><a href="javascript:window.location=buildArgs('page6')">6</a></li>
+        <li class="disabled"><a href="javascript:window.location=buildArgs('page6')">&nbsp;</a></li>
       </ul>
     </div>
     </td>
-    <td class="navCtrl"><a href="page5" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">Clear Filters</a>   </td>
+    <td class="navCtrl"><a href="page6" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">Clear Filters</a>   </td>
   </tr>
 </table>
 <div class="jumbotron"> <p>
@@ -90,7 +90,7 @@ This is place to put content. You can put slider, short description about your w
 		<tr>
 			<td>
 				<div id="stackedbars"  width="800" height="500">
-					<h3>Rating on Last Evaluation</h3>
+					<h3>Last Polled Satisfaction Level of Departed Employees</h3>
 					<svg id="chart" width="800" height="500"></svg>
 				</div>
 			</td>
@@ -100,19 +100,19 @@ This is place to put content. You can put slider, short description about your w
     					<th><h3>Salary</h3></th>
   				</tr>
   				<tr>
-   				 <td><input type="checkbox" id="filterAllSal" name="filterAllSal" onclick="allSalaryRanges('page5', this);">
+   				 <td><input type="checkbox" id="filterAllSal" name="filterAllSal" onclick="allSalaryRanges('page6', this);">
 					  <label for="filterAllSal" onclick="toggleCheckbox('filterAllSal'); return false;">ALL</label></td>
   				</tr>
  					<tr>
-   				 <td><input type="checkbox" id="filterHigh" name="filterHigh" onclick="applyFilter('page5', this);">
+   				 <td><input type="checkbox" id="filterHigh" name="filterHigh" onclick="applyFilter('page6', this);">
 					  <label for="filterHigh" onclick="toggleCheckbox('filterHigh'); return false;">High Salary</label></td>
   				</tr>
   				<tr>
-   				  <td><input type="checkbox" id="filterMed" name="filterMed" onclick="applyFilter('page5', this);">
+   				  <td><input type="checkbox" id="filterMed" name="filterMed" onclick="applyFilter('page6', this);">
 					  <label for="filterMed" onclick="toggleCheckbox('filterMed'); return false;">Medium Salary</label></td>
   				</tr>
   				<tr>
-   				  <td><input type="checkbox" id="filterLow" name="filterLow" onclick="applyFilter('page5', this);">
+   				  <td><input type="checkbox" id="filterLow" name="filterLow" onclick="applyFilter('page6', this);">
 					  <label for="filterLow" onclick="toggleCheckbox('filterLow'); return false;">Low Salary</label></td>
   				</tr>
   				<tr class="filter"></tr>
@@ -144,14 +144,14 @@ var z = d3.scaleOrdinal(d3.schemeCategory20);
 
 var stack = d3.stack();
 
-d3.csv("../data/last_eval_rating.csv", type, function(error, data) {
+d3.csv("../data/satis_level.csv", type, function(error, data) {
 	if (error){
 		console.log("couldn't find csv");
 		throw error;  
 	} 
 
 	data.sort(function(a, b) {
-		return a.rating - b.rating; })
+		return a.satisfaction - b.satisfaction; })
 	;
 
   //apply filters before building chart
@@ -162,7 +162,7 @@ d3.csv("../data/last_eval_rating.csv", type, function(error, data) {
 	data = data.map(appFilter);
 	data.columns = columns;
 
-	x.domain(data.map(function(d) { return d.rating; }));
+	x.domain(data.map(function(d) { return d.satisfaction; }));
 	y.domain([0, d3.max(data, function(d) { return d.total; })]).nice();
 	z.domain(data.columns.slice(1));
 
@@ -174,7 +174,7 @@ d3.csv("../data/last_eval_rating.csv", type, function(error, data) {
 		.selectAll("rect")
 		.data(function(d) { return d; })
 		.enter().append("rect")
-			.attr("x", function(d) { return x(d.data.rating); })
+			.attr("x", function(d) { return x(d.data.satisfaction); })
 			.attr("y", function(d) {   return y(d[1]); })
 			.attr("height", function(d) { 
 				// console.log(d);
@@ -245,23 +245,11 @@ function appFilter(d){
 	return d;
 }
 
-// function filterSal(d){
-
-// 	if(isFilterApplied("filterHigh")) delete;
-//    else if("medium".localeCompare(d.Department)===0 && isFilterApplied("filterMed")) return false;
-//    else if("low".localeCompare(d.Department)===0 && isFilterApplied("filterLow")) return false;
-
-//    return true;
-// }
-
 function getColumns(d){
 	var cols = Object.keys(d);
 	var totInd = cols.indexOf("total");
 	if(totInd>=0)
 		cols.splice(totInd,1);
-	// var ratInd = cols.indexOf("rating");
-	// if(ratInd>=0)
-	// 	cols.splice(ratInd,1);
 
 	return cols;
 }
