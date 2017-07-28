@@ -8,6 +8,7 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="/paramUtils.js"></script>
 <style type="text/css">
     .bs-example{
       margin: 20px;
@@ -58,37 +59,52 @@
 </p>
 
 <b>Narrative Structure:</b><br/>
-This visualization follows the narrative structure of an interactive slideshow. Six distinct slides make up this slideshow, and the user is allowed to navigate between them via a Navigation panel at the top of the page. On each of the slides, the user is able to inspect the visualization
+This visualization follows the narrative structure of an interactive slideshow. Six distinct slides make up this slideshow, and the user is allowed to navigate between them via a Navigation panel at the top of the page. On each of the slides, the user is shown a chart that is meant to communicate a specifc idea that to the user, as well as a narrative that argues the point and provides context around the date.  The user is able to inspect the visualization and apply filters to drill into specific datapoint, and when they are satisfied they can proceed to the next scene in the visualization. Together, the scenes persuade the viewer to draw a specific conclusion. 
 <br/><br/>
 
-<b>Scene Usage:</b>
+<b>Scene Usage:</b><br/>
+The visualization is made up of six individual scenese, each meant to serve a different purpose.
+<br/>
+<ul>
+  <li>The first scene poses a question to the viewer, and provides commentary on why the question is an important one to solve. In this case, we a justifying the need to predict employee departures using HR data.</li>
+  <li>The second scene contains a data table that shows employee departures broken down by salary range and department.  The intent is to highlight that most departures are from only a few departments.</li>
+  <li>Scene 3 explores the observation made in Scene 2, but alerts the user to the fact that the departments with the highest departures also have the highest overall population. This calls into question our initial hypothesis.</li>
+  <li>The fourth scene tries to reconcile the question raised by Scene 3 by determining departure rate for every department and caluclating a trendline. The narrative on this chart argues that the three departments with the highest rate of attrition have a departure rate in line with other departments in the organization, and therefore the department and employee belongs to is not a good indicator for answering this question. </li>
+  <li>The fifth scene draws the viewer's attention to an alternative theory that is better supported by the data; that employee departures might be predicatble by their most recent employee review score.  The data very convincingly shows that employees who received a rating between 0.55 and 0.75. </li>
+  <li>The sixth scene support the hypothesis raised in Scene 5 by demonstrating that similar conclusions can be found by charting Employee Satisfaction numbers.</li>
+</ul>
+
+<b>Annotation Usage:</b><br/>
+Annotations are used throughout the visualization to call out specific data points and values.  The stacked bar charts displayed on Scene 5 and Scene 6 are annotated to draw the viewer's attention to ranges in the data where employees are very unlikely to leave the company. 
+<br/><br/>
+Scenes 3 and 4 make heavy use of tooltips to annotate values represented on the chart.  By mousing over a value on either of these pages, the viewer can see what value is represented by the glyph.  Page 4 also features a trendline that is also annotated by a tooltip.  Mousing over the line displays the current line equation and r value to the viewer.
 <br/><br/>
 
-<b>Annotation Usage:</b>
+<b>Parameter Usage:</b><br/>
+Parameters are used in this visualization to help the user filter the data.  All charts in the visualization support some level of filtering, either by the salary range of the employees or by the department that the employees belong to.  When appropriate, the scene will support filtering by both of these sets of parameters.  Groupings of checkboxes are available to the right of each chart, and the user can toggle these filters via clicking on the checkboxes.  Additionally, a Clear Filters button is available at the top of every scene so that the viewer can easily clear all Filters and reset the visualization to it's original state.  
 <br/><br/>
 
-<b>Parameter Usage:</b>
-
-<b>Trigger Usage:</b>
-
+<b>Trigger Usage:</b><br/>
+Triggers are used in this visualization to set filtering parameters on the data, and to invoke the display of tooltips over important data points.  In the case of tooltips, the "mouseover" and "mouseout" events invoke the execution of code to generate or hide HTML elements in the DOM.  These event handlers are applied to the D3 elements in the chart directly.  Other elements of the visualization on modified when the "onclick" event is generated.  When this occurs, the source element is inspected for it's id and value, parameters are updated as necessary, and the charts that are displayed to the viewer are modified according to the user's actions. 
 <br/><br/>
 
+<b>Commentary:</b><br/>
 The data itself is a simulated set of employee records, with each record containing fields defined for their department, a categorical salary groups, a satisfaction rating, their last evaluation, and several others.  Each employee record also labeled with a field signifying whether they’ve left the company or stayed.  By visualizing attributes common amongst departed employees, I this dashboard intends to give the viewer insights into the characteristics of those employees and predict the departures of additional employees in the future. 
-</p><p>
+<br/><br/>
 A natural first approach is to try to determine if certain departments have more departures than others, and it is similarly natural to suspect that most people who left did so because they wanted more money.  The grid table in the upper left corner of the dashboard provides quantitative counts of departures by department, further divided they person’s salary with either a High, Medium, or Low designation.  Because this is quantitative data, cells that contain larger counts are given higher color saturation than those will smaller count, with the largest overall counts also changing their hue. This approach agrees with the philosophy of using highly saturated strokes, but lightly saturated area fills. 
-</p><p>
+<br/><br/>
 This table allows the viewer to quickly identify that our highest number of departures are from lowly paid employees from the Support, Technical, and especially Sales departments.  It comes as no surprise that highly paid employees are less likely to leave, as the table clearly denotes, but this table is somewhat misleading because it suggests to the viewer that a few departments are particularly prone to high employee turnover. 
-</p><p>
+<br/><br/>
 To determine if this suggestion is true or false, we must examine the overall rate of departures varies significantly between departments.  By plotting the Departure Count against the overall Department Population and calculating a trendline we can clearly see that all departments in the dataset have a similar attrition rate of around 25%. This fact is clearly visible in the Scatter Plot graph in the lower left of the Dashboard, and is further supported by the accompanying Packet Bubbles chart that shows that the departments with the highest departure count also have a significantly higher population overall.  With these two visualizations, the viewer can clearly conclude that the employee’s department is not a significant factor in departure rates.  The color pallet for the Scatter Plot separates the categorical departments by hue because the data is nominal. 
-</p><p>
+<br/><br/>
 Since we have determined that department is not a factor in turnover rates, the viewer can turn their focus to the satisfaction level of departed employees and their last evaluation ratings, each measure subdivided by their salaries. The remaining two charts on the Dashboard help the user visualize this quantitative data as Stacked Bar charts, using position to as a mechanism to clearly communicate the group size to the user for each dimension.   Categories are differentiated by hue because the salary data is categorical. 
-</p><p>
+<br/><br/>
 From these two charts, very interesting patterns start to emerge.  Specifically, very interesting conclusions can be made from the distribution of departures according to the Last Evaluation Rating.  Unsurprisingly, employees are very likely to leave when they were reviewed poorly.  These employees most likely fear that they may not have a future with the company, and have left due to fear for their job.  Less expected was the high number of departures from highly rated employees, though this high attrition rate is understandable.  These employees may feel confident enough in their abilities to confidently explore other opportunities, or they may feel underappreciated in their current role. 
-</p><p>
+<br/><br/>
 Most surprising was the revelation that almost no employees who received mediocre ratings left the company compared to their peers who were rated either higher or lower. These results are mirrored closely in the chart that displays employee satisfaction; high employee turnover occurred either when an employee is either very unsatisfied or when the employee has a higher than average level of satisfaction.  Almost no employees with a middling satisfaction level left compared to their peers. 
-</p><p>
+<br/><br/>
 From this visualization, an HR employee might conclude that retention is highest when employees are neither treated so poorly that they are negatively motivated to find new work, nor praised so heavily that they feel entitled to more compensation than the company is willing to grant them. 
-</p>
+<br/><br/>
 </div>
     
 </body>

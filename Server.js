@@ -6,8 +6,6 @@ var dataPath = __dirname + "/data/";
 var assetPath = __dirname + "/assets/";
 
 router.use(function (req,res,next) {
-  // console.log("/" + req.method);
-  // console.log(req.url);
   next();
 });
 
@@ -44,12 +42,10 @@ app.use("/",router);
 
 //DATA ROUTES
 app.use("/data/last_eval_rating.csv",function(req,res){
-  console.log("Loading CSV file.");
   res.sendFile(dataPath + "last_eval_rating.csv");
 });
 
 app.use("/data/dept_rate_size.csv",function(req,res){
-  console.log("Loading CSV file.");
   res.sendFile(dataPath + "dept_rate_size.csv");
 });
 
