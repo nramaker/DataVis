@@ -16,7 +16,7 @@
       margin: 20px;
     }*/
     td, th {
-      padding: 1px 4px;
+      padding: 1px 1px;
       min-width: 200px;
     }
 
@@ -48,6 +48,11 @@
     .jumbotron{
       padding-top:12px;
       padding-bottom:12px;
+       padding-left:12px;
+    }
+    label{
+      font-weight: normal;
+      font-size:small;
     }
 </style>
 </head>
@@ -69,14 +74,14 @@
     <td>
     <div class="bs-example">
       <ul class="pagination pagination-lg">
-        <li><a href="/">&laquo;</a></li>
+        <li><a href="/">&laquo; Previous</a></li>
         <li><a href="/">1</a></li>
         <li class="disabled"><a href="#">2</a></li>
         <li><a href="javascript:window.location=buildArgs('page3')">3</a></li>
         <li><a href="javascript:window.location=buildArgs('page4')">4</a></li>
         <li><a href="javascript:window.location=buildArgs('page5')">5</a></li>
         <li><a href="javascript:window.location=buildArgs('page6')">6</a></li>
-        <li><a href="javascript:window.location=buildArgs('page3')">&raquo;</a></li>
+        <li><a href="javascript:window.location=buildArgs('page3')">Next &raquo;</a></li>
       </ul>
     </div>
     </td>
@@ -85,10 +90,9 @@
 </table>
 <div class="jumbotron">
 <h2>Predictors of Employee Departures</h2></p>
-A natural first approach is to try to determine if certain departments have more departures than others, and it is similarly natural to suspect that most people who left did so because they wanted more money.  The grid table below provides quantitative counts of departures by department, further divided they person’s salary with either a High, Medium, or Low designation.  Because this is quantitative data, cells that contain larger counts are given higher color saturation than those will smaller count, with the largest overall counts also changing their hue. This approach agrees with the philosophy of using highly saturated strokes, but lightly saturated area fills. 
+A natural first approach is to try to determine if certain departments have more departures than others, and it is similarly natural to suspect that most people who left did so because they wanted more money.  The grid table below provides quantitative counts of departures by department, further divided they person’s salary with either a High, Medium, or Low designation.  Because this is quantitative data cells that contain larger counts are given higher color saturation than those will smaller count, with the largest overall counts also changing their hue.
 <br/><br/>
 This table allows the viewer to quickly identify that our highest number of departures are from lowly paid employees from the Support, Technical, and especially Sales departments.  It comes as no surprise that highly paid employees are less likely to leave, as the table clearly denotes, but this table is somewhat misleading because it suggests to the viewer that a few departments are particularly prone to high employee turnover. 
-<br/><br/>
 Initial indications are that the Sales, Support, and Technical divisions are particularily prone to turnover.  
 </p></div>
     

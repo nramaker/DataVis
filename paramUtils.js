@@ -185,3 +185,7 @@ function isFilterApplied(filterName){
 	if("filterSupport".localeCompare(filterName)===0) return filterSupport;
 	if("filterTech".localeCompare(filterName)===0) return filterTech;
 }
+
+function areAllSalariesFiltered(){
+	return filterHigh && filterMed && filterLow;
+}

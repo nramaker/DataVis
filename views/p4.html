@@ -68,6 +68,11 @@
     .jumbotron{
       padding-top:12px;
       padding-bottom:12px;
+     padding-left:12px;
+    }
+    label{
+      font-weight: normal;
+      font-size:small;
     }
 </style>
 </head>
@@ -89,31 +94,36 @@
     <td>
     <div class="bs-example">
       <ul class="pagination pagination-lg">
-        <li><a href="javascript:window.location=buildArgs('page3')">&laquo;</a></li>
+        <li><a href="javascript:window.location=buildArgs('page3')">&laquo; Previous</a></li>
         <li><a href="/">1</a></li>
         <li><a href="javascript:window.location=buildArgs('page2')">2</a></li>
         <li><a href="javascript:window.location=buildArgs('page3')">3</a></li>
         <li class="disabled"><a href="javascript:window.location=buildArgs('page4')">4</a></li>
         <li><a href="javascript:window.location=buildArgs('page5')">5</a></li>
         <li><a href="javascript:window.location=buildArgs('page6')">6</a></li>
-        <li><a href="javascript:window.location=buildArgs('page5')">&raquo;</a></li>
+        <li><a href="javascript:window.location=buildArgs('page5')">Next &raquo;</a></li>
       </ul>
     </div>
     </td>
     <td class="navCtrl"><a href="page4" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">Clear Filters</a>   </td>
   </tr>
 </table>
-<div class="jumbotron"> <p>
+<div class="jumbotron">
 <h2>Predictors of Employee Departures</h2>
 
-This is place to put content. You can put slider, short description about your website and place some links for navigation.
+<p>
+By plotting the Departure Count against the overall Department Population and calculating a trendline we can clearly see that all departments in the dataset have a similar attrition rate of around 25%. This fact is clearly visible in the Scatter Plot graph in the lower left of the Dashboard, and is further supported by the accompanying Packet Bubbles chart that shows that the departments with the highest departure count also have a significantly higher population overall.  With these two visualizations, the viewer can clearly conclude that the employee’s department is not a significant factor in departure rates.  The color pallet for the Scatter Plot separates the categorical departments by hue because the data is nominal. 
+<br/><br/>
+By plotting a trend line between departures per department against the overall size of each department, we can clearly see that departure rates of employees from the Sales, Support, and Technical departments are not signicantly different from those of other departments. 
+<br/><br/>
+We can conclude that the department an employee belongs to is not a good indicator of whether the employee will leave. 
 </p></div>
 <table > 
     <tr>
       <td>
         <div id="scatterPlot" valign="top">
         <h3>Departure Rate by Department</h3>
-        <svg id="chart" width="800" height="500"></svg></div>
+        <svg id="chart" width="800" height="400"></svg></div>
       </td>
       <td border="1">
         <table class="filter" valign="top">
@@ -336,7 +346,7 @@ This is place to put content. You can put slider, short description about your w
         .data(color.domain())
         .enter().append("g")
            .attr("class", "legend")
-           .attr("transform", function(d, i) { return "translate(0," + (i * 20+200) + ")"; });
+           .attr("transform", function(d, i) { return "translate(0," + (i * 20+150) + ")"; });
     legend.append("rect")
            .attr("x", width+18)
            .attr("width", 18)

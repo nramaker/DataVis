@@ -54,6 +54,11 @@
     .jumbotron{
       padding-top:12px;
       padding-bottom:12px;
+      padding-left:12px;
+    }
+    label{
+      font-weight: normal;
+      font-size:small;
     }
 </style>
 </head>
@@ -75,14 +80,14 @@
     <td>
     <div class="bs-example">
       <ul class="pagination pagination-lg">
-        <li><a href="javascript:window.location=buildArgs('page2')">&laquo;</a></li>
+        <li><a href="javascript:window.location=buildArgs('page2')">&laquo; Previous</a></li>
         <li><a href="/">1</a></li>
         <li><a href="javascript:window.location=buildArgs('page2')">2</a></li>
         <li class="disabled"><a href="javascript:window.location=buildArgs('page3')">3</a></li>
         <li><a href="javascript:window.location=buildArgs('page4')">4</a></li>
         <li><a href="javascript:window.location=buildArgs('page5')">5</a></li>
         <li><a href="javascript:window.location=buildArgs('page6')">6</a></li>
-        <li><a href="javascript:window.location=buildArgs('page4')">&raquo;</a></li>
+        <li><a href="javascript:window.location=buildArgs('page4')">Next &raquo;</a></li>
       </ul>
     </div>
     </td>
@@ -92,14 +97,16 @@
 
 <div class="jumbotron"> 
 <h2>Predictors of Employee Departures</h2>
-
-This is place to put content. You can put slider, short description about your website and place some links for navigation.
-</div>
+So does this mean that employees from the Sales, Support, and Technical departments are highly likely to leave? Not necessarily.
+<br/><br/>
+While these three departments have had more employees leave than the others, we haven't taken into account whether or not those departments are larger than the others.  The packed circle chart below confirms that suspicion, and demonstrates that the three departments with the highest number of departures are also the largest departments in the entire organization.
+<br/><br/>Are the departure rates of these departments higher than average?
+ </div>
 <table>
     <tr>
       <td>
         <h3>Population by Department</h3>
-        <svg width="800" height="500"><g transform="translate(1,1)"></g></svg>
+        <svg width="800" height="400"><g transform="translate(1,1)"></g></svg>
       </td>
       <td border="1">
         <table class="filter" valign="top">
@@ -252,22 +259,22 @@ function hovered(hover) {
 function pickColor(d){
   if(d.id==="all")
     return color(0);
-  if(d.id==="all.sales" || d.id==="all.support" || d.id==="all.technical")
+  if(d.id==="all.Sales" || d.id==="all.Support" || d.id==="all.Technical")
     return color(1);
   return color(2);
 }
 
 function isFiltered(d){
-  if("all.technical".localeCompare(d.id)===0 && isFilterApplied("filterTech"))  return false; 
-  if("all.hr".localeCompare(d.id)===0 && isFilterApplied("filterHR")) return false;   
-  if("all.support".localeCompare(d.id)===0 && isFilterApplied("filterSupport")) return false;
-  if("all.sales".localeCompare(d.id)===0 && isFilterApplied("filterSales")) return false;
-  if("all.RandD".localeCompare(d.id)===0 && isFilterApplied("filterRND")) return false;
-  if("all.product_mng".localeCompare(d.id)===0 && isFilterApplied("filterPM")) return false;
-  if("all.marketing".localeCompare(d.id)===0 && isFilterApplied("filterMarketing")) return false;
-  if("all.management".localeCompare(d.id)===0 && isFilterApplied("filterMgmt")) return false;
+  if("all.Technical".localeCompare(d.id)===0 && isFilterApplied("filterTech"))  return false; 
+  if("all.HR".localeCompare(d.id)===0 && isFilterApplied("filterHR")) return false;   
+  if("all.Support".localeCompare(d.id)===0 && isFilterApplied("filterSupport")) return false;
+  if("all.Sales".localeCompare(d.id)===0 && isFilterApplied("filterSales")) return false;
+  if("all.ResearchDevelopment".localeCompare(d.id)===0 && isFilterApplied("filterRND")) return false;
+  if("all.ProductManagement".localeCompare(d.id)===0 && isFilterApplied("filterPM")) return false;
+  if("all.Marketing".localeCompare(d.id)===0 && isFilterApplied("filterMarketing")) return false;
+  if("all.Management".localeCompare(d.id)===0 && isFilterApplied("filterMgmt")) return false;
   if("all.IT".localeCompare(d.id)===0 && isFilterApplied("filterIT")) return false;
-  if("all.accounting".localeCompare(d.id)===0 && isFilterApplied("filterAccounting")) return false;
+  if("all.Accounting".localeCompare(d.id)===0 && isFilterApplied("filterAccounting")) return false;
   
   return true;
 }

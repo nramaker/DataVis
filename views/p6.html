@@ -45,6 +45,11 @@
     .jumbotron{
       padding-top:12px;
       padding-bottom:12px;
+       padding-left:12px;
+    }
+    label{
+      font-weight: normal;
+      font-size:small;
     }
 </style>
 </head>
@@ -66,14 +71,14 @@
     <td>
     <div class="bs-example">
       <ul class="pagination pagination-lg">
-        <li><a href="javascript:window.location=buildArgs('page5')">&laquo;</a></li>
+        <li><a href="javascript:window.location=buildArgs('page5')">&laquo; Previous</a></li>
         <li><a href="/">1</a></li>
         <li><a href="javascript:window.location=buildArgs('page2')">2</a></li>
         <li><a href="javascript:window.location=buildArgs('page3')">3</a></li>
         <li><a href="javascript:window.location=buildArgs('page4')">4</a></li>
         <li><a href="javascript:window.location=buildArgs('page5')">5</a></li>
         <li class="disabled"><a href="javascript:window.location=buildArgs('page6')">6</a></li>
-        <li class="disabled"><a href="javascript:window.location=buildArgs('page6')">&nbsp;</a></li>
+        <li class="disabled"><a href="javascript:window.location=buildArgs('page6')">Next &raquo;</a></li>
       </ul>
     </div>
     </td>
@@ -89,9 +94,9 @@ This is place to put content. You can put slider, short description about your w
 	<table>
 		<tr>
 			<td>
-				<div id="stackedbars"  width="800" height="500">
+				<div id="stackedbars"  width="800" height="400">
 					<h3>Last Polled Satisfaction Level of Departed Employees</h3>
-					<svg id="chart" width="800" height="500"></svg>
+					<svg id="chart" width="800" height="400"></svg>
 				</div>
 			</td>
 			<td border="1">
@@ -206,6 +211,53 @@ d3.csv("../data/satis_level.csv", type, function(error, data) {
 			.attr("transform", function(d, i) { return "translate(0," + i * 20 + ")"; })
 			.style("font", "10px sans-serif");
 
+if(!areAllSalariesFiltered()){
+	  var trendData = [[250,200,200,300]];
+    
+    var trendline = svg.selectAll(".trendline")
+      .data(trendData);
+	g.append("g")
+			.attr("class", "axis axis--y")
+			.call(d3.axisLeft(y).ticks(10, "s"))
+		.append("text")
+			.attr("x", 2)
+			.attr("y", y(y.ticks(10).pop()))
+			.attr("dy", "0.35em")
+			.attr("text-anchor", "start")
+			.attr("fill", "#000")
+			.text("Number of Departures");
+	
+	g.append("g")
+		.attr("class", "annote axis axis--y")
+		.call(d3.axisLeft(y).ticks(10, "s"))
+		.append("text")
+			.attr("x", 250)
+			.attr("y", 190)
+			.attr("dy", "0.35em")
+			.attr("text-anchor", "start")
+			.attr("fill", "#000")
+			.text("Abnormally low departures amongst employees");
+ 	g.append("g")
+		.attr("class", "annote axis axis--y")
+		.call(d3.axisLeft(y).ticks(10, "s"))
+		.append("text")
+			.attr("x", 250)
+			.attr("y", 200)
+			.attr("dy", "0.35em")
+			.attr("text-anchor", "start")
+			.attr("fill", "#000")
+			.text("   with moderate satisfaction levels.");
+	trendline.enter()
+      .append("line")
+      .attr("class", "trendline")
+      .attr("x1", 315)
+      .attr("y1", 210)
+      .attr("x2", 320)
+      .attr("y2", 330)
+      .attr("stroke", "black")
+      .attr("stroke-width", 2)
+      .attr("transform", "translate(40,20)");
+}
 	legend.append("rect")
 			.attr("x", width + 18)
 			.attr("width", 18)
